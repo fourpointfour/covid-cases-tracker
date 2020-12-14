@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -10,23 +11,35 @@ class DataItems extends StatefulWidget {
 
 class _DataItemsState extends State<DataItems> {
   var data;
+  var stateCodes;
+  Timer timer;
   Future getData() async{
     Response response = await get("https://api.covid19india.org/v4/data.json");
     data = jsonDecode(response.body);
-    print(data.length);
-    return data;
+    print(data.keys);
+    setState(() {
+      this.data = data;
+      this.stateCodes = List<String>.of(this.data.keys);
+    });
+  }
+
+  void getDataContinuously() async {
+
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
-    getData().then((data){
-      setState(() {
-        this.data = data;
-      });
-    });
+    getData();
+    //TODO: Uncomment the following function to retrieve data continuously
+    // timer = Timer.periodic(Duration(seconds: 40), (Timer t) => getData());
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -39,6 +52,21 @@ class _DataItemsState extends State<DataItems> {
         );
       }
     else
-      return Text("This is proof that data is retrieved successfully");
+      return ListView.builder(
+        itemCount: stateCodes.length,
+        itemBuilder: (BuildContext context, int index){
+          //stateCodes[index] is the state code
+          return Container(
+            margin: EdgeInsets.fromLTRB(5, 8, 5, 8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.white70,
+            ),
+            child: ListTile(
+              title: Text(stateCodes[index]),
+            ),
+          );
+        },
+      );
   }
 }
