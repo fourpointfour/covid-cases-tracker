@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:covid_cases_tracker/decoration_parameters.dart';
+import 'package:covid_cases_tracker/total_case_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart';
 
@@ -10,8 +13,9 @@ class DataItems extends StatefulWidget {
 }
 
 class _DataItemsState extends State<DataItems> {
-  var data;
-  var stateCodes;
+  dynamic data;
+  var confirmed = 32, recovered = 0, deceased = 0;
+  List<String> stateCodes;
   Timer timer;
   Future getData() async{
     Response response = await get("https://api.covid19india.org/v4/data.json");
@@ -20,18 +24,25 @@ class _DataItemsState extends State<DataItems> {
     setState(() {
       this.data = data;
       this.stateCodes = List<String>.of(this.data.keys);
+      getTotalData();
     });
   }
 
-  void getDataContinuously() async {
-
+  void getTotalData()
+  {
+    print(stateCodes.length);
+    stateCodes.map((String stateCode){
+      this.confirmed += data[stateCode]["total"]["confirmed"];
+      this.deceased += data[stateCode]["total"]["deceased"];
+      this.recovered += data[stateCode]["total"]["recovered"];
+    });
   }
 
   @override
-  void initState() {
+  void initState(){
     super.initState();
-
     getData();
+
     //TODO: Uncomment the following function to retrieve data continuously
     // timer = Timer.periodic(Duration(seconds: 40), (Timer t) => getData());
   }
@@ -52,21 +63,55 @@ class _DataItemsState extends State<DataItems> {
         );
       }
     else
-      return ListView.builder(
-        itemCount: stateCodes.length,
-        itemBuilder: (BuildContext context, int index){
-          //stateCodes[index] is the state code
-          return Container(
-            margin: EdgeInsets.fromLTRB(5, 8, 5, 8),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.white70,
+      return Container(
+        child: Column(
+          children: [
+            // for horizontal scrolling
+            Container(
+              height: 180,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                children: [
+                  Container(
+                    width: 180,
+                    child: TotalCaseTile(listTitle: "Confirmed", casesCount: confirmed,),
+                  ),
+                  SizedBox(width: 10,),
+                  Container(
+                    width: 180,
+                    child: TotalCaseTile(listTitle: "Deceased", casesCount: deceased,),
+                  ),
+                  SizedBox(width: 10,),
+                  Container(
+                    width: 180,
+                    child: TotalCaseTile(listTitle: "Recovered", casesCount: recovered,),
+                  ),
+                ],
+              ),
             ),
-            child: ListTile(
-              title: Text(stateCodes[index]),
-            ),
-          );
-        },
+            SizedBox(height: 10,),
+            Expanded(
+              child: Container(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: stateCodes.length,
+                  itemBuilder: (BuildContext context, int index){
+                    return Container(
+                      margin: EdgeInsets.all(8),
+                      height: 100,
+                      decoration: decoration_for_cases,
+                      child: ExpansionTile(
+                        title: Text(stateCodes[index]),
+                        children: [Text("Hello subtitle!"),],
+                      ),
+                    );
+                  },
+                ),
+              ),
+            )
+          ],
+        ),
       );
   }
 }
