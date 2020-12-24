@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:covid_cases_tracker/decoration_parameters.dart';
+import 'package:covid_cases_tracker/dropdown_selector.dart';
 import 'package:covid_cases_tracker/total_case_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -14,28 +15,26 @@ class DataItems extends StatefulWidget {
 
 class _DataItemsState extends State<DataItems> {
   dynamic data;
-  var confirmed = 32, recovered = 0, deceased = 0;
+  var confirmed = 0, recovered = 0, deceased = 0;
   List<String> stateCodes;
   Timer timer;
   Future getData() async{
     Response response = await get("https://api.covid19india.org/v4/data.json");
     data = jsonDecode(response.body);
-    print(data.keys);
     setState(() {
       this.data = data;
       this.stateCodes = List<String>.of(this.data.keys);
+      this.stateCodes.remove('TT');
+      print(stateCodes.length);
       getTotalData();
     });
   }
 
   void getTotalData()
   {
-    print(stateCodes.length);
-    stateCodes.map((String stateCode){
-      this.confirmed += data[stateCode]["total"]["confirmed"];
-      this.deceased += data[stateCode]["total"]["deceased"];
-      this.recovered += data[stateCode]["total"]["recovered"];
-    });
+    this.confirmed += data['TT']['total']['confirmed'];
+    this.recovered += data['TT']['total']['recovered'];
+    this.deceased += data['TT']['total']['deceased'];
   }
 
   @override
@@ -91,25 +90,7 @@ class _DataItemsState extends State<DataItems> {
               ),
             ),
             SizedBox(height: 10,),
-            Expanded(
-              child: Container(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: stateCodes.length,
-                  itemBuilder: (BuildContext context, int index){
-                    return Container(
-                      margin: EdgeInsets.all(8),
-                      height: 100,
-                      decoration: decoration_for_cases,
-                      child: ExpansionTile(
-                        title: Text(stateCodes[index]),
-                        children: [Text("Hello subtitle!"),],
-                      ),
-                    );
-                  },
-                ),
-              ),
-            )
+            DropdownStateSelector(stateCodes: stateCodes, data: data,),
           ],
         ),
       );
