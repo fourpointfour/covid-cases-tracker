@@ -13,7 +13,7 @@ class _DataPageState extends State<DataPage> {
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
-        backgroundColor: Colors.lightBlue,
+        backgroundColor: Color(0xFFFCF8E8),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.only(top: 15),
