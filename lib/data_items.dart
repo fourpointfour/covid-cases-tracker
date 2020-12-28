@@ -67,23 +67,23 @@ class _DataItemsState extends State<DataItems> {
           children: [
             // for horizontal scrolling
             Container(
-              height: 180,
+              height: 100,
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
                 children: [
                   Container(
-                    width: 180,
+                    width: 150,
                     child: TotalCaseTile(listTitle: "Confirmed", casesCount: confirmed,),
                   ),
                   SizedBox(width: 10,),
                   Container(
-                    width: 180,
+                    width: 150,
                     child: TotalCaseTile(listTitle: "Deceased", casesCount: deceased,),
                   ),
                   SizedBox(width: 10,),
                   Container(
-                    width: 180,
+                    width: 150,
                     child: TotalCaseTile(listTitle: "Recovered", casesCount: recovered,),
                   ),
                 ],
