@@ -1,3 +1,4 @@
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -57,6 +58,16 @@ class LandingPage extends StatelessWidget {
                           onPressed: (){
                             Navigator.pushNamed(context, '/dataPage');
                           },
+                        ),
+                      ),
+                      Container(
+                        height: 300,
+                        width: 300,
+                        child: FlareActor(
+                          'lib/assets/coronavirus.flr',
+                          alignment: Alignment.center,
+                          fit: BoxFit.contain,
+                          animation: 'idle',
                         ),
                       ),
                     ],
