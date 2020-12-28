@@ -15,7 +15,10 @@ class _DataPageState extends State<DataPage> {
       child: Scaffold(
         backgroundColor: Colors.lightBlue,
         body: SafeArea(
-          child: DataItems()
+          child: Padding(
+            padding: const EdgeInsets.only(top: 15),
+            child: DataItems(),
+          )
         ),
       ),
     );
