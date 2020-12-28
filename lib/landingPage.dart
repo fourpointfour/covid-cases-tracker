@@ -8,62 +8,64 @@ class LandingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
-        backgroundColor: Colors.lightBlueAccent,
+        backgroundColor: Color(0xFFFCF8E8),
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                child: Text("Corona Cases Tracker"),
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(8, 20, 8, 10),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black54,
-                      blurRadius: 10.0,
-                      spreadRadius: 3.0,
-                    ),
-                  ],
-                ),
-                height: 200,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 5),
-                      child: Center(
-                        child: RaisedButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+                child: Center(
+                  child: Column(
+                    children: [
+                      Text(
+                          "Corona Cases\nTracker",
+                        style: TextStyle(
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic,
+                          color: Colors.red,
+                        ),
+                      ),
+                      // the following container would contain the button to
+                      // navigate to the dataPage
+                      Container(
+                        margin: EdgeInsets.only(top: 250),
+                        width: 210,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFDF7861),
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black26,
+                              blurRadius: 5,
+                              spreadRadius: 2,
+                            ),
+                          ],
+                        ),
+                        child: FlatButton(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Icon(
+                                Icons.format_list_numbered,
+                                size: 10,
+                              ),
+                              Text("Get Cases Count"),
+                            ],
                           ),
-                          color: Colors.purpleAccent,
-                          child: Text("Get Current Stats"),
                           onPressed: (){
-                            print("Get button pressed");
                             Navigator.pushNamed(context, '/dataPage');
                           },
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              )
+              ),
             ],
           ),
         ),
-        // floatingActionButton: FloatingActionButton(
-        //   child: Text("Button"),
-        //   onPressed: (){
-        //     i++;
-        //     print("Button Pressed $i");
-        //   },
-        // ),
       ),
     );
   }
