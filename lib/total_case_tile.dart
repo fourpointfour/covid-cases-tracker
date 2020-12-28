@@ -19,7 +19,7 @@ class _TotalCaseTileState extends State<TotalCaseTile> {
     return Container(
       margin: EdgeInsets.all(6),
       decoration: BoxDecoration(
-        color: Colors.pinkAccent,
+        color: Color(0xFFDF7861),
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: Column(

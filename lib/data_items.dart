@@ -57,7 +57,7 @@ class _DataItemsState extends State<DataItems> {
     if(data == null)
       {
         return SpinKitDualRing(
-          color: Colors.yellowAccent,
+          color: Color(0xFF583D72),
           size: 70,
         );
       }

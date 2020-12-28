@@ -67,7 +67,7 @@ class _DropdownStateSelectorState extends State<DropdownStateSelector> {
             hint: Text(
                 "Select a state",
               style: TextStyle(
-                color: Colors.white,
+                color: Color(0xFFECB390),
               ),
             ),
             // itemHeight: 18,
