@@ -56,56 +56,63 @@ class _DropdownStateSelectorState extends State<DropdownStateSelector> {
     return Container(
       width: 200,
       margin: EdgeInsets.fromLTRB(7, 2, 7, 2),
-      child: DropdownButton(
-        value: _selectedStateCode,
-        elevation: 20,
-        underline: Container(),
-        icon: Icon(Icons.arrow_drop_down_rounded),
-        iconEnabledColor: Colors.white,
-        hint: Text(
-            "Select a state",
-          style: TextStyle(
-            color: Colors.white,
+      child: Column(
+        children: [
+          DropdownButton(
+            value: _selectedStateCode,
+            elevation: 20,
+            underline: Container(),
+            icon: Icon(Icons.arrow_drop_down_rounded),
+            iconEnabledColor: Colors.white,
+            hint: Text(
+                "Select a state",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            // itemHeight: 18,
+            items: widget.stateCodes.map((String stateCode){
+              return DropdownMenuItem<String>(
+                value: stateCode,
+                child: Text(widget.stateName[stateCode]),
+              );
+            }).toList(),
+            onChanged: (val){
+              setState(() {
+                _selectedStateCode = val;
+              });
+            }
           ),
-        ),
-        // itemHeight: 18,
-        items: widget.stateCodes.map((String stateCode){
-          return DropdownMenuItem<String>(
-            value: stateCode,
-            child: Text(widget.stateName[stateCode]),
-          );
-        }).toList(),
-        onChanged: (val){
-          setState(() {
-            _selectedStateCode = val;
-          });
-        },
-        // todo: Fix selectedItemBuilder issue
-        // selectedItemBuilder: (BuildContext context) {
-        //   return widget.stateCodes.map<Widget>((String stateCode){
-        //     return ExpansionTile(
-        //       title: Text(
-        //         widget.stateName[stateCode],
-        //         style: TextStyle(
-        //           color: Colors.white70,
-        //           fontWeight: FontWeight.bold,
-        //           fontSize: 25,
-        //         ),
-        //       ),
-        //       children: [
-        //         Column(
-        //           children: [
-        //             Text("Confirmed: ${widget.data[stateCode]['total']['confirmed'] ?? 0}"),
-        //             SizedBox(height: 5),
-        //             Text("Recovered: ${widget.data[stateCode]['total']['recovered'] ?? 0}"),
-        //             SizedBox(height: 5),
-        //             Text("Deceased: ${widget.data[stateCode]['total']['deceased'] ?? 0}"),
-        //           ],
-        //         ),
-        //       ],
-        //     );
-        //   }).toList();
-        // },
+          (_selectedStateCode == null) ? SizedBox() : Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(6),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 5,
+                  spreadRadius: 2,
+                ),
+              ]
+            ),
+            child: ExpansionTile(
+              title: Text(
+                widget.stateName[_selectedStateCode],
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              expandedCrossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Confirmed: ${widget.data[_selectedStateCode]['total']['confirmed']}"),
+                SizedBox(height: 5,),
+                Text("Recovered: ${widget.data[_selectedStateCode]['total']['recovered']}"),
+                SizedBox(height: 5,),
+                Text("Deceased: ${widget.data[_selectedStateCode]['total']['deceased']}"),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
