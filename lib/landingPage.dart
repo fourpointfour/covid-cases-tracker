@@ -10,6 +10,18 @@ class LandingPage extends StatelessWidget {
     return Container(
       child: Scaffold(
         backgroundColor: Color(0xFFFCF8E8),
+        appBar: AppBar(
+          backgroundColor: Color(0xFFFCF8E8),
+          elevation: 0,
+          leading: IconButton(
+            icon: Icon(
+              Icons.info,
+            ),
+            iconSize: 30,
+            onPressed: (){},
+            color: Colors.black,
+          ),
+        ),
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -31,7 +43,7 @@ class LandingPage extends StatelessWidget {
                       // the following container would contain the button to
                       // navigate to the dataPage
                       Container(
-                        margin: EdgeInsets.only(top: 250),
+                        margin: EdgeInsets.only(top: 200),
                         width: 210,
                         decoration: BoxDecoration(
                           color: Color(0xFFDF7861),
@@ -61,13 +73,13 @@ class LandingPage extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        height: 300,
-                        width: 300,
+                        height: 250,
+                        width: 250,
                         child: FlareActor(
                           'lib/assets/coronavirus.flr',
                           alignment: Alignment.center,
                           fit: BoxFit.contain,
-                          animation: 'idle',
+                          animation: 'move',
                         ),
                       ),
                     ],
