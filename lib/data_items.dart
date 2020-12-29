@@ -89,7 +89,7 @@ class _DataItemsState extends State<DataItems> {
                 ],
               ),
             ),
-            SizedBox(height: 10,),
+            SizedBox(height: 25,),
             DropdownStateSelector(stateCodes: stateCodes, data: data,),
           ],
         ),
