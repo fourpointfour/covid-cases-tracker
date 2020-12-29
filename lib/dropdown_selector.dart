@@ -1,3 +1,4 @@
+import 'package:covid_cases_tracker/decoration_parameters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
@@ -81,34 +82,96 @@ class _DropdownStateSelectorState extends State<DropdownStateSelector> {
               setState(() {
                 _selectedStateCode = val;
               });
-            }
+            },
+            selectedItemBuilder: (BuildContext context){
+              return widget.stateCodes.map<Widget>((String stateCode){
+                return Text(
+                  widget.stateName[stateCode],
+                  style: TextStyle(
+                    // fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                  ),
+                );
+              }).toList();
+            },
           ),
           (_selectedStateCode == null) ? SizedBox() : Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6),
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 5,
-                  spreadRadius: 2,
-                ),
-              ]
-            ),
-            child: ExpansionTile(
-              title: Text(
-                widget.stateName[_selectedStateCode],
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              expandedCrossAxisAlignment: CrossAxisAlignment.start,
+            child: Column(
               children: [
-                Text("Confirmed: ${widget.data[_selectedStateCode]['total']['confirmed']}"),
-                SizedBox(height: 5,),
-                Text("Recovered: ${widget.data[_selectedStateCode]['total']['recovered']}"),
-                SizedBox(height: 5,),
-                Text("Deceased: ${widget.data[_selectedStateCode]['total']['deceased']}"),
+                Container(
+                  decoration: stateCaseTileParameter,
+                  child: ListTile(
+                    title: Text(
+                      'Confirmed: ${widget.data[_selectedStateCode]['total']['confirmed']}',
+                      style: stateTileTitleTextStyle,
+                    ),
+                    subtitle: (widget.data[_selectedStateCode].containsKey('delta')) ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: (widget.data[_selectedStateCode]['delta'].containsKey('confirmed')) ? [
+                        // icon to indicate rise and fall
+                        Icon(
+                            (widget.data[_selectedStateCode]['delta']['confirmed'] < 0) ?
+                            Icons.arrow_downward_rounded : Icons.arrow_upward_rounded,
+                          size: 15,
+                        ),
+                        Text(
+                            '${widget.data[_selectedStateCode]['delta']['confirmed']}',
+                          style: stateTileSubtitleTextStyle,
+                        ),
+                      ] : [],
+                    ) : SizedBox(),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Container(
+                  decoration: stateCaseTileParameter,
+                  child: ListTile(
+                    title: Text(
+                      'Recovered: ${widget.data[_selectedStateCode]['total']['recovered']}',
+                      style: stateTileTitleTextStyle,
+                    ),
+                    subtitle: (widget.data[_selectedStateCode].containsKey('delta')) ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: (widget.data[_selectedStateCode]['delta'].containsKey('recovered')) ? [
+                        // icon to indicate rise and fall
+                        Icon(
+                          (widget.data[_selectedStateCode]['delta']['recovered'] < 0) ?
+                          Icons.arrow_downward_rounded : Icons.arrow_upward_rounded,
+                          size: 15,
+                        ),
+                        Text(
+                          '${widget.data[_selectedStateCode]['delta']['recovered']}',
+                          style: stateTileSubtitleTextStyle,
+                        ),
+                      ] : [],
+                    ) : SizedBox(),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Container(
+                  decoration: stateCaseTileParameter,
+                  child: ListTile(
+                    title: Text(
+                      'Deceased: ${widget.data[_selectedStateCode]['total']['deceased']}',
+                      style: stateTileTitleTextStyle,
+                    ),
+                    subtitle: (widget.data[_selectedStateCode].containsKey('delta')) ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: (widget.data[_selectedStateCode]['delta'].containsKey('deceased')) ? [
+                        // icon to indicate rise and fall
+                        Icon(
+                          (widget.data[_selectedStateCode]['delta']['deceased'] < 0) ?
+                          Icons.arrow_downward_rounded : Icons.arrow_upward_rounded,
+                          size: 15,
+                        ),
+                        Text(
+                          '${widget.data[_selectedStateCode]['delta']['deceased']}',
+                          style: stateTileSubtitleTextStyle,
+                        ),
+                      ] : [],
+                    ) : SizedBox(),
+                  ),
+                ),
               ],
             ),
           ),
