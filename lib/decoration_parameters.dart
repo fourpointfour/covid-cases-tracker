@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 
 const decoration_for_cases = BoxDecoration(
   borderRadius: BorderRadius.all(Radius.circular(10)),
-  // color: Colors.orangeAccent,
 );
 
 const stateCaseTileParameter = BoxDecoration(
@@ -18,10 +18,12 @@ const stateCaseTileParameter = BoxDecoration(
 );
 
 const stateTileTitleTextStyle = TextStyle(
-  fontWeight: FontWeight.bold,
-  fontSize: 20,
+  fontWeight: FontWeight.w600,
+  fontSize: 23,
 );
 
 const stateTileSubtitleTextStyle = TextStyle(
-  fontSize: 15,
+  fontSize: 19,
+  color: Colors.black54,
+  fontWeight: FontWeight.bold,
 );

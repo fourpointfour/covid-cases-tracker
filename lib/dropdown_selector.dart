@@ -61,21 +61,26 @@ class _DropdownStateSelectorState extends State<DropdownStateSelector> {
         children: [
           DropdownButton(
             value: _selectedStateCode,
+            dropdownColor: Colors.red[200],
             elevation: 20,
             underline: Container(),
-            icon: Icon(Icons.arrow_drop_down_rounded),
-            iconEnabledColor: Colors.white,
+            icon: Icon(Icons.arrow_downward_rounded),
+            iconEnabledColor: Color(0xFFDF7861),
             hint: Text(
                 "Select a state",
               style: TextStyle(
-                color: Color(0xFFECB390),
+                color: Color(0xFFDF7861),
               ),
             ),
-            // itemHeight: 18,
             items: widget.stateCodes.map((String stateCode){
               return DropdownMenuItem<String>(
                 value: stateCode,
-                child: Text(widget.stateName[stateCode]),
+                child: Container(
+                  width: 220,
+                  child: Center(
+                    child: Text(widget.stateName[stateCode]),
+                  ),
+                ),
               );
             }).toList(),
             onChanged: (val){
@@ -88,13 +93,14 @@ class _DropdownStateSelectorState extends State<DropdownStateSelector> {
                 return Text(
                   widget.stateName[stateCode],
                   style: TextStyle(
-                    // fontSize: 25,
                     fontWeight: FontWeight.bold,
+                    fontSize: 18,
                   ),
                 );
               }).toList();
             },
           ),
+          SizedBox(height: 15,),
           (_selectedStateCode == null) ? SizedBox() : Container(
             child: Column(
               children: [
@@ -102,24 +108,13 @@ class _DropdownStateSelectorState extends State<DropdownStateSelector> {
                   decoration: stateCaseTileParameter,
                   child: ListTile(
                     title: Text(
-                      'Confirmed: ${widget.data[_selectedStateCode]['total']['confirmed']}',
+                      'Confirmed:',
                       style: stateTileTitleTextStyle,
                     ),
-                    subtitle: (widget.data[_selectedStateCode].containsKey('delta')) ? Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: (widget.data[_selectedStateCode]['delta'].containsKey('confirmed')) ? [
-                        // icon to indicate rise and fall
-                        Icon(
-                            (widget.data[_selectedStateCode]['delta']['confirmed'] < 0) ?
-                            Icons.arrow_downward_rounded : Icons.arrow_upward_rounded,
-                          size: 15,
-                        ),
-                        Text(
-                            '${widget.data[_selectedStateCode]['delta']['confirmed']}',
-                          style: stateTileSubtitleTextStyle,
-                        ),
-                      ] : [],
-                    ) : SizedBox(),
+                    subtitle: Text(
+                      '${widget.data[_selectedStateCode]['total']['confirmed']}',
+                      style: stateTileSubtitleTextStyle,
+                    ),
                   ),
                 ),
                 SizedBox(height: 20),
@@ -127,24 +122,13 @@ class _DropdownStateSelectorState extends State<DropdownStateSelector> {
                   decoration: stateCaseTileParameter,
                   child: ListTile(
                     title: Text(
-                      'Recovered: ${widget.data[_selectedStateCode]['total']['recovered']}',
+                      'Recovered:',
                       style: stateTileTitleTextStyle,
                     ),
-                    subtitle: (widget.data[_selectedStateCode].containsKey('delta')) ? Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: (widget.data[_selectedStateCode]['delta'].containsKey('recovered')) ? [
-                        // icon to indicate rise and fall
-                        Icon(
-                          (widget.data[_selectedStateCode]['delta']['recovered'] < 0) ?
-                          Icons.arrow_downward_rounded : Icons.arrow_upward_rounded,
-                          size: 15,
-                        ),
-                        Text(
-                          '${widget.data[_selectedStateCode]['delta']['recovered']}',
-                          style: stateTileSubtitleTextStyle,
-                        ),
-                      ] : [],
-                    ) : SizedBox(),
+                    subtitle: Text(
+                      '${widget.data[_selectedStateCode]['total']['recovered']}',
+                      style: stateTileSubtitleTextStyle,
+                    ),
                   ),
                 ),
                 SizedBox(height: 20),
@@ -152,24 +136,13 @@ class _DropdownStateSelectorState extends State<DropdownStateSelector> {
                   decoration: stateCaseTileParameter,
                   child: ListTile(
                     title: Text(
-                      'Deceased: ${widget.data[_selectedStateCode]['total']['deceased']}',
+                      'Deceased:',
                       style: stateTileTitleTextStyle,
                     ),
-                    subtitle: (widget.data[_selectedStateCode].containsKey('delta')) ? Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: (widget.data[_selectedStateCode]['delta'].containsKey('deceased')) ? [
-                        // icon to indicate rise and fall
-                        Icon(
-                          (widget.data[_selectedStateCode]['delta']['deceased'] < 0) ?
-                          Icons.arrow_downward_rounded : Icons.arrow_upward_rounded,
-                          size: 15,
-                        ),
-                        Text(
-                          '${widget.data[_selectedStateCode]['delta']['deceased']}',
-                          style: stateTileSubtitleTextStyle,
-                        ),
-                      ] : [],
-                    ) : SizedBox(),
+                    subtitle: Text(
+                      '${widget.data[_selectedStateCode]['total']['deceased']}',
+                      style: stateTileSubtitleTextStyle,
+                    ),
                   ),
                 ),
               ],

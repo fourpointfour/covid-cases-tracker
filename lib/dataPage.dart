@@ -1,6 +1,5 @@
 import 'package:covid_cases_tracker/data_items.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class DataPage extends StatefulWidget {
   @override

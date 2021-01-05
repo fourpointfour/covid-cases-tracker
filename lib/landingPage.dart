@@ -1,10 +1,10 @@
 import 'package:flare_flutter/flare_actor.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/widgets.dart';
 
 class LandingPage extends StatelessWidget {
-  // TODO: Remove the next variable
-  // var i = 0;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -13,14 +13,7 @@ class LandingPage extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Color(0xFFFCF8E8),
           elevation: 0,
-          leading: IconButton(
-            icon: Icon(
-              Icons.info,
-            ),
-            iconSize: 30,
-            onPressed: (){},
-            color: Colors.black,
-          ),
+          leading: MyIcon(),
         ),
         body: SafeArea(
           child: Column(
@@ -31,19 +24,15 @@ class LandingPage extends StatelessWidget {
                 child: Center(
                   child: Column(
                     children: [
-                      Text(
-                          "Corona Cases\nTracker",
-                        style: TextStyle(
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.italic,
-                          color: Colors.red,
-                        ),
+                      Container(
+                        padding: EdgeInsets.only(left: 7, right: 7),
+                        width: MediaQuery.of(context).size.width,
+                        child: Image.asset('lib/assets/title.png'),
                       ),
                       // the following container would contain the button to
                       // navigate to the dataPage
                       Container(
-                        margin: EdgeInsets.only(top: 200),
+                        margin: EdgeInsets.only(top: 80),
                         width: 210,
                         decoration: BoxDecoration(
                           color: Color(0xFFDF7861),
@@ -93,3 +82,102 @@ class LandingPage extends StatelessWidget {
     );
   }
 }
+
+class MyIcon extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      iconSize: 30,
+      icon: Icon(Icons.info, color: Colors.black,),
+      onPressed: (){
+        showModalBottomSheet(
+          backgroundColor: Colors.transparent,
+          context: context,
+          builder: (context) => Container(
+            height: 300,
+            decoration: BoxDecoration(
+              color: Color(0xFFDF7861),
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Center(
+                  child: Text(
+                      "About the developer",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30,
+                    ),
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Vaibhav Kushwaha',
+                      style: TextStyle(
+                          fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Icon(Icons.email, color: Colors.black,),
+                        SizedBox(width: 7),
+                        RichText(
+                          text: TextSpan(
+                            style: TextStyle(
+                              color: Colors.deepPurple,
+                              fontSize: 20,
+                            ),
+                            text: 'vaikushbhav@gmail.com',
+                            recognizer: TapGestureRecognizer()..onTap = () async {
+                              final String url = 'mailto:vaikushbhav@gmail.com';
+                              if(await canLaunch(url))
+                                await launch(url);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    Center(
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 22,
+                            width: 22,
+                            child: Image.asset(
+                              'lib/assets/github.png',
+                            ),
+                          ),
+                          SizedBox(width: 7),
+                          RichText(
+                            text: TextSpan(
+                              style: TextStyle(
+                                color: Colors.deepPurple,
+                                fontSize: 20,
+                              ),
+                              text: 'fourpointfour',
+                              recognizer: TapGestureRecognizer()..onTap = () async {
+                                final String url = 'https://www.github.com/fourpointfour';
+                                if(await canLaunch(url))
+                                  await launch(url);
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+

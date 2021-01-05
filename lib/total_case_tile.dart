@@ -1,4 +1,3 @@
-import 'package:covid_cases_tracker/decoration_parameters.dart';
 import 'package:flutter/material.dart';
 
 class TotalCaseTile extends StatefulWidget {
@@ -30,13 +29,15 @@ class _TotalCaseTileState extends State<TotalCaseTile> {
             widget.listTitle,
             style: TextStyle(
               fontWeight: FontWeight.bold,
+              fontStyle: FontStyle.italic,
+              fontSize: 20
             ),
           ),
           // text containing the count of the cases
           Text(
             "${widget.casesCount}",
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 18,
             ),
           ),
         ],

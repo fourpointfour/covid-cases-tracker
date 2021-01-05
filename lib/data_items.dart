@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:covid_cases_tracker/decoration_parameters.dart';
 import 'package:covid_cases_tracker/dropdown_selector.dart';
 import 'package:covid_cases_tracker/total_case_tile.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +24,6 @@ class _DataItemsState extends State<DataItems> {
       this.data = data;
       this.stateCodes = List<String>.of(this.data.keys);
       this.stateCodes.remove('TT');
-      print(stateCodes.length);
       getTotalData();
     });
   }
@@ -41,9 +39,7 @@ class _DataItemsState extends State<DataItems> {
   void initState(){
     super.initState();
     getData();
-
-    //TODO: Uncomment the following function to retrieve data continuously
-    // timer = Timer.periodic(Duration(seconds: 40), (Timer t) => getData());
+    timer = Timer.periodic(Duration(minutes: 30), (Timer t) => getData());
   }
 
   @override
